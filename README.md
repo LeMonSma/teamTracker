@@ -7,6 +7,8 @@ An app that allows you to build a team and store there information.
 HTML/CSS/JS
 ## Repo
 https://github.com/LeMonSma/teamTracker.git
+## Video
+https://drive.google.com/file/d/1ydTwZh39HTXqFmh3CJ05I994gIN2HrYz/view
 ### Contributions
 #### Made By 
 Cory Burris
