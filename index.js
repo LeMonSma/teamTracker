@@ -3,7 +3,6 @@ const inquirer = require('inquirer');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const fs = require('fs')
-// const generateHtml = require('./utils/generateHtml')
 const employeeArray = []
 
 
@@ -16,7 +15,7 @@ function createEmployee() {
             type: 'list',
             name: 'employeeRole',
             message: 'Please select an employee type',
-            choices: ['Engineer', 'Intern', 'Manager', 'None'],
+            choices: ['Manager', 'Engineer', 'Intern'],
             validate: nameInput => {
                 if (nameInput) {
                     return true
@@ -133,29 +132,28 @@ function createEmployee() {
         }
     ]).then(data => {
         if (data.employeeRole === 'Manager') {
-            employeeArray.push(new Manager(data.employeeRole, data.name, data.email, data.employeeId, data.officeNum))
+            employeeArray.push(new Manager(data.name, data.email, data.employeeId, data.officeNum))
             if (data.addEmployee) {
                 return createEmployee()
 
             } else {
-                return console.log(employeeArray)
+                return writeFile('./dist/index.html', employeeArray)
             }
         } else if (data.employeeRole === 'Engineer') {
-            employeeArray.push(new Engineer(data.employeeRole, data.name, data.email, data.employeeId, data.githubName))
+            employeeArray.push(new Engineer(data.name, data.email, data.employeeId, data.githubName))
             if (data.addEmployee) {
                 return createEmployee()
 
             } else {
-                return console.log(employeeArray)
+                return writeFile('./dist/index.html', employeeArray)
             }
         } else {
-            employeeArray.push(new Intern(data.employeeRole, data.name, data.email, data.employeeId, data.schoolInput))
+            employeeArray.push(new Intern(data.name, data.email, data.employeeId, data.schoolInput))
             if (data.addEmployee) {
                 return createEmployee()
 
             } else {
-                console.log(employeeArray)
-                return
+                return writeFile('./dist/index.html', employeeArray)
             }
         }
     })
@@ -177,9 +175,17 @@ function createEmployee() {
 
 
 
-//  function writeFile(fileName, data){
-//      const generateHtml = require('')
-// }
+function writeFile(fileName, employeeArray) {
+    console.log(employeeArray)
+    const generateHtml = require('./utils/generateHtml')
+    const html = generateHtml(employeeArray)
+    fs.writeFile(fileName, html, err => {
+        err ? console.error(err) : console.log('File created!')
+    })
+
+
+
+}
 createEmployee()
 
 
